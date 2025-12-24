@@ -5,6 +5,7 @@ import pandas as pd
 import time
 from tqdm import tqdm
 from parser import parse_args
+import math
 
 def main():
     args = parse_args()
@@ -15,8 +16,8 @@ def main():
     }
 
     subreddit = args.subreddit
-
-    posts = get_posts(headers,subreddit)
+    max_pages = math.ceil(args.limit/25)
+    posts = get_posts(headers,subreddit,max_pages)
 
     for post in tqdm(posts[:args.limit]):
         comments,score,permalink,title = get_comments_score_permalink(post)[0],get_comments_score_permalink(post)[1],get_comments_score_permalink(post)[2],get_comments_score_permalink(post)[3]
